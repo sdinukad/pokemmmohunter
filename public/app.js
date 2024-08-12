@@ -10,6 +10,7 @@ document.addEventListener('DOMContentLoaded', () => {
         .then(locations => {
             const regionSelect = document.getElementById('region');
             const locationSelect = document.getElementById('location');
+            const locationSearch = document.getElementById('locationSearch');
 
             // Populate region select
             for (const region of Object.keys(locations)) {
@@ -29,11 +30,43 @@ document.addEventListener('DOMContentLoaded', () => {
                 updateLocationOptions(selectedRegion, locations);
             });
 
+            // Filter location options based on search input
+            locationSearch.addEventListener('input', () => {
+                const filter = locationSearch.value.toLowerCase();
+                const options = locationSelect.options;
+
+                for (let i = 0; i < options.length; i++) {
+                    const txtValue = options[i].textContent || options[i].innerText;
+                    if (txtValue.toLowerCase().indexOf(filter) > -1) {
+                        options[i].style.display = "";
+                    } else {
+                        options[i].style.display = "none";
+                    }
+                }
+
+                // Show the dropdown list
+                locationSelect.size = options.length;
+                locationSelect.style.display = "block";
+            });
+
+            // Update search box with selected location when chosen from dropdown
+            locationSelect.addEventListener('change', () => {
+                locationSearch.value = locationSelect.value;
+                locationSelect.style.display = "none"; // Hide the dropdown after selection
+            });
+
             // Handle form submission
             document.getElementById('dataForm').addEventListener('submit', event => {
                 event.preventDefault();
                 const region = regionSelect.value;
-                const location = locationSelect.value;
+                const location = locationSearch.value;
+
+                // Validation check for empty location
+                if (!location) {
+                    alert('Please select a location before submitting.');
+                    return;
+                }
+
                 const tableDiv = document.getElementById('pokemonTable');
                 tableDiv.innerHTML = '<p>Loading...</p>';
                 fetch(`/pokemons_data?region=${encodeURIComponent(region)}&location=${encodeURIComponent(location)}`)
@@ -81,6 +114,10 @@ function updateLocationOptions(region, locations) {
             locationSelect.appendChild(option);
         });
     }
+
+    // Show the location list
+    locationSelect.size = locationSelect.options.length;
+    locationSelect.style.display = "block";
 }
 
 function updateTable(data) {
