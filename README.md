@@ -4,4 +4,5 @@ Just a simple web viewer for data that was originally taken from NoMoreLostShini
 Make sure to check it out and support the developer.
 
 Made for my personal use only.
-Live version available [here](https://pokemmmohunter.onrender.com/).
+Live version available [here](https://pokemmmohunter.onrender.com/). 
+Might be slow on first load since it's a free hosting tier.
