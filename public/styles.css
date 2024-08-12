@@ -33,6 +33,41 @@ select {
     color: #e0e0e0;
     border: 1px solid #444;
     border-radius: 4px;
+    width: 100%; /* Make select elements full width */
+    box-sizing: border-box; /* Ensure padding and border are included in the width */
+}
+
+/* Select2 container styling */
+.select2-container--default .select2-selection--single,
+.select2-container--default .select2-selection--multiple {
+    background-color: #2e2e2e;
+    color: #e0e0e0;
+    border: 1px solid #444;
+    border-radius: 4px;
+    width: 100%; /* Ensure Select2 is full width */
+    box-sizing: border-box;
+}
+
+/* Style for the rendered selection text */
+.select2-container--default .select2-selection--single .select2-selection__rendered,
+.select2-container--default .select2-selection--multiple .select2-selection__rendered {
+    color: #e0e0e0; /* Ensure text color contrasts with background */
+}
+
+/* Select2 dropdown styling */
+.select2-container--default .select2-results__option {
+    background-color: #2e2e2e; /* Dropdown background */
+    color: #e0e0e0; /* Option text color */
+}
+
+.select2-container--default .select2-results__option--highlighted {
+    background-color: #6200ea; /* Highlight color */
+    color: #ffffff; /* Highlighted option text color */
+}
+
+/* Select2 dropdown border */
+.select2-container--default .select2-results {
+    border: 1px solid #444; /* Border for the dropdown */
 }
 
 /* Button styling */
@@ -49,15 +84,6 @@ button {
 
 button:hover {
     background-color: #3700b3;
-}
-
-/* Clear button specific styling */
-#clear-search {
-    background-color: #b00020; /* Red color for clear button */
-}
-
-#clear-search:hover {
-    background-color: #7f0000;
 }
 
 /* Table styling */
@@ -83,4 +109,26 @@ table th {
 
 table tr:nth-child(even) {
     background-color: #2e2e2e;
+}
+
+/* Footer styling */
+footer {
+    background-color: #1e1e1e; /* Dark background color */
+    color: #b0b0b0; /* Lighter text color */
+    padding: 1px; /* Reduced padding */
+    text-align: center;
+    font-size: 12px; /* Smaller font size */
+    margin-top: 20px; /* Add some space above the footer */
+    box-shadow: 0 -1px 3px rgba(0, 0, 0, 0.2); /* Subtle shadow */
+}
+
+/* Footer link styling */
+.footer-content a {
+    color: #6200ea; /* Link color */
+    text-decoration: none; /* Remove underline */
+    font-weight: light; /* Normal font weight */
+}
+
+.footer-content a:hover {
+    text-decoration: underline; /* Add underline on hover */
 }

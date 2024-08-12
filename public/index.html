@@ -5,25 +5,22 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pokémon Data Viewer</title>
     <link rel="stylesheet" href="styles.css">
+    <!-- Include Select2 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
 </head>
 <body>
     <h1>Reverse Dex for Pokemmo</h1>
     <form id="dataForm">
-        <label for="region">Select region:</label>
-        <select id="region" name="region" required>
+        <label for="region">Select Region:</label>
+        <select id="region" name="region" style="width: 50%" required>
             <!-- Options will be populated by JavaScript -->
         </select>
 
-        <label for="location">Location (Clear to search again):</label>
-        <div class="custom-select-wrapper">
-            <div class="custom-select">
-                <input type="text" id="locationSearch" placeholder="Search locations..." autocomplete="no">
-                <select id="location" size="5">
-                    <!-- Location options will be dynamically populated here -->
-                </select>
-            </div>
-        </div> 
-
+        <label for="location">Select Location:</label>
+        <select id="location" name="location" style="width: 50%">
+            <!-- Location options will be dynamically populated here -->
+        </select>
+        <br>
         <button type="submit">Show Pokémon</button>
     </form>
 
@@ -31,6 +28,15 @@
         <!-- Pokémon table will be populated by JavaScript -->
     </div>
 
+    <!-- Include jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <!-- Include Select2 JS -->
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
     <script src="app.js"></script>
+    <footer>
+        <div class="footer-content">
+            <p>View source on <a href="https://github.com/sdinukad/pokemmmohunter" target="_blank" rel="noopener noreferrer">github</a></p>
+        </div>
+    </footer>
 </body>
 </html>

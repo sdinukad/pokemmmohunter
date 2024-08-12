@@ -1,4 +1,15 @@
 document.addEventListener('DOMContentLoaded', () => {
+    // Initialize Select2
+    $('#region').select2({
+        placeholder: 'Select a region',
+        allowClear: true
+    });
+    
+    $('#location').select2({
+        placeholder: 'Search locations...',
+        allowClear: true
+    });
+
     // Load region and location data from JSON files
     fetch('locations.json')
         .then(response => {
@@ -8,67 +19,37 @@ document.addEventListener('DOMContentLoaded', () => {
             return response.json();
         })
         .then(locations => {
-            const regionSelect = document.getElementById('region');
-            const locationSelect = document.getElementById('location');
-            const locationSearch = document.getElementById('locationSearch');
+            const regionSelect = $('#region');
+            const locationSelect = $('#location');
 
             // Populate region select
-            for (const region of Object.keys(locations)) {
-                const option = document.createElement('option');
-                option.value = region;
-                option.textContent = region;
-                regionSelect.appendChild(option);
-            }
+            const regions = Object.keys(locations);
+            const regionOptions = regions.map(region => ({ id: region, text: region }));
+            regionSelect.empty().select2({ data: regionOptions });
 
             // Set default region to Kanto and update location options
-            regionSelect.value = 'Kanto'; // Set default value
+            regionSelect.val('Kanto').trigger('change'); // Set default value
             updateLocationOptions('Kanto', locations);
 
             // Update location options based on selected region
-            regionSelect.addEventListener('change', () => {
-                const selectedRegion = regionSelect.value;
+            regionSelect.on('change', () => {
+                const selectedRegion = regionSelect.val();
                 updateLocationOptions(selectedRegion, locations);
             });
 
-            // Filter location options based on search input
-            locationSearch.addEventListener('input', () => {
-                const filter = locationSearch.value.toLowerCase();
-                const options = locationSelect.options;
-
-                for (let i = 0; i < options.length; i++) {
-                    const txtValue = options[i].textContent || options[i].innerText;
-                    if (txtValue.toLowerCase().indexOf(filter) > -1) {
-                        options[i].style.display = "";
-                    } else {
-                        options[i].style.display = "none";
-                    }
-                }
-
-                // Show the dropdown list
-                locationSelect.size = options.length;
-                locationSelect.style.display = "block";
-            });
-
-            // Update search box with selected location when chosen from dropdown
-            locationSelect.addEventListener('change', () => {
-                locationSearch.value = locationSelect.value;
-                locationSelect.style.display = "none"; // Hide the dropdown after selection
-            });
-
             // Handle form submission
-            document.getElementById('dataForm').addEventListener('submit', event => {
+            $('#dataForm').on('submit', function(event) {
                 event.preventDefault();
-                const region = regionSelect.value;
-                const location = locationSearch.value;
+                const region = regionSelect.val();
+                const location = locationSelect.val();
 
                 // Validation check for empty location
-                if (!location) {
+                if (!location || location.length === 0) {
                     alert('Please select a location before submitting.');
                     return;
                 }
 
-                const tableDiv = document.getElementById('pokemonTable');
-                tableDiv.innerHTML = '<p>Loading...</p>';
+                $('#pokemonTable').html('<p>Loading...</p>');
                 fetch(`/pokemons_data?region=${encodeURIComponent(region)}&location=${encodeURIComponent(location)}`)
                     .then(response => {
                         if (!response.ok) {
@@ -92,8 +73,8 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 function updateLocationOptions(region, locations) {
-    const locationSelect = document.getElementById('location');
-    locationSelect.innerHTML = ''; // Clear previous options
+    const locationSelect = $('#location');
+    locationSelect.empty(); // Clear previous options
 
     if (locations[region]) {
         // Use a Set to store unique location names
@@ -107,17 +88,12 @@ function updateLocationOptions(region, locations) {
         });
 
         // Populate location dropdown with unique names
-        uniqueLocations.forEach(location => {
-            const option = document.createElement('option');
-            option.value = location;
-            option.textContent = location;
-            locationSelect.appendChild(option);
-        });
+        const locationOptions = Array.from(uniqueLocations).map(location => ({ id: location, text: location }));
+        locationSelect.select2({ data: locationOptions });
     }
 
-    // Show the location list
-    locationSelect.size = locationSelect.options.length;
-    locationSelect.style.display = "block";
+    // Show the location dropdown
+    locationSelect.trigger('change');
 }
 
 function updateTable(data) {
