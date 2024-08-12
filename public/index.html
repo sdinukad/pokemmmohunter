@@ -5,21 +5,24 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pokémon Data Viewer</title>
     <link rel="stylesheet" href="styles.css">
-    
 </head>
 <body>
     <h1>Reverse Dex for Pokemmo</h1>
-    <p>I just cooked this up sorry if it fails!</p>
     <form id="dataForm">
-        <label for="region">Select Region:</label>
+        <label for="region">Select region:</label>
         <select id="region" name="region" required>
             <!-- Options will be populated by JavaScript -->
         </select>
 
-        <label for="location">Select Location:</label>
-        <select id="location" name="location" required>
-            <!-- Options will be populated by JavaScript -->
-        </select>
+        <label for="location">Location (Clear to search again):</label>
+        <div class="custom-select-wrapper">
+            <div class="custom-select">
+                <input type="text" id="locationSearch" placeholder="Search locations..." autocomplete="no">
+                <select id="location" size="5">
+                    <!-- Location options will be dynamically populated here -->
+                </select>
+            </div>
+        </div> 
 
         <button type="submit">Show Pokémon</button>
     </form>
@@ -27,7 +30,6 @@
     <div id="pokemonTable">
         <!-- Pokémon table will be populated by JavaScript -->
     </div>
-
 
     <script src="app.js"></script>
 </body>
