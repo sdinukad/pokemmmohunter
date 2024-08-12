@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pokémon Data Viewer</title>
+    <link rel="stylesheet" href="styles.css">
+    
+</head>
+<body>
+    <h1>Pokémon Data Viewer</h1>
+    <form id="dataForm">
+        <label for="region">Select Region:</label>
+        <select id="region" name="region" required>
+            <!-- Options will be populated by JavaScript -->
+        </select>
+
+        <label for="location">Select Location:</label>
+        <select id="location" name="location" required>
+            <!-- Options will be populated by JavaScript -->
+        </select>
+
+        <button type="submit">Show Pokémon</button>
+    </form>
+
+    <div id="pokemonTable">
+        <!-- Pokémon table will be populated by JavaScript -->
+    </div>
+
+
+    <script src="app.js"></script>
+</body>
+</html>
