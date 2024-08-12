@@ -6,3 +6,6 @@ Make sure to check it out and support the developer.
 Made for my personal use only.
 Live version available [here](https://pokemmmohunter.onrender.com/). 
 Might be slow on first load since it's a free hosting tier.
+
+###
+Added another [live version on Heroku](https://boiling-mountain-84480-128d22c65632.herokuapp.com/) for better performance  
