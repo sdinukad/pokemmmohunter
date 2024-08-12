@@ -83,6 +83,8 @@ function updateTable(data) {
         return;
     }
 
+    const groupedData = groupByNameAndId(data);
+
     const table = document.createElement('table');
     const thead = document.createElement('thead');
     const tbody = document.createElement('tbody');
@@ -101,21 +103,47 @@ function updateTable(data) {
     `;
 
     // Create table rows
-    data.forEach(row => {
-        const tr = document.createElement('tr');
-        tr.innerHTML = `
-            <td>${row.name || ''}</td>
-            <td>${row.id || ''}</td>
-            <td>${row.type || ''}</td>
-            <td>${row.rarity || ''}</td>
-            <td>${row.minLevel || ''} - ${row.maxLevel || ''}</td>
-            <td>${row.heldItems || ''}</td>
-            <td>${row.dayTimeSeason || ''}</td>
+    Object.keys(groupedData).forEach(nameId => {
+        const group = groupedData[nameId];
+        const [name, id] = nameId.split('|');
+
+        // Main row for Pokémon name and ID
+        const mainRow = document.createElement('tr');
+        mainRow.innerHTML = `
+            <td rowspan="${group.length}">${name}</td>
+            <td rowspan="${group.length}">${id}</td>
+            <td>${group[0].type || ''}</td>
+            <td>${group[0].rarity || ''}</td>
+            <td>${group[0].minLevel || ''} - ${group[0].maxLevel || ''}</td>
+            <td>${group[0].heldItems || ''}</td>
+            <td>${group[0].dayTimeSeason || ''}</td>
         `;
-        tbody.appendChild(tr);
+        tbody.appendChild(mainRow);
+
+        // Additional rows for detailed information
+        for (let i = 1; i < group.length; i++) {
+            const detailRow = document.createElement('tr');
+            detailRow.innerHTML = `
+                <td>${group[i].type || ''}</td>
+                <td>${group[i].rarity || ''}</td>
+                <td>${group[i].minLevel || ''} - ${group[i].maxLevel || ''}</td>
+                <td>${group[i].heldItems || ''}</td>
+                <td>${group[i].dayTimeSeason || ''}</td>
+            `;
+            tbody.appendChild(detailRow);
+        }
     });
 
     table.appendChild(thead);
     table.appendChild(tbody);
     tableDiv.appendChild(table);
 }
+
+function groupByNameAndId(data) {
+    return data.reduce((acc, item) => {
+        const key = `${item.name}|${item.id}`;
+        (acc[key] = acc[key] || []).push(item);
+        return acc;
+    }, {});
+}
+
