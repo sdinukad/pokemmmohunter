@@ -19,30 +19,14 @@ document.addEventListener('DOMContentLoaded', () => {
                 regionSelect.appendChild(option);
             }
 
+            // Set default region to Kanto and update location options
+            regionSelect.value = 'Kanto'; // Set default value
+            updateLocationOptions('Kanto', locations);
+
             // Update location options based on selected region
             regionSelect.addEventListener('change', () => {
                 const selectedRegion = regionSelect.value;
-                locationSelect.innerHTML = ''; // Clear previous options
-
-                if (locations[selectedRegion]) {
-                    // Use a Set to store unique location names
-                    const uniqueLocations = new Set();
-
-                    // Iterate over locations and add filtered names to the Set
-                    locations[selectedRegion].forEach(location => {
-                        // Use regex to remove parts within parentheses
-                        const cleanLocation = location.replace(/\s*\(.*?\)$/, '').trim();
-                        uniqueLocations.add(cleanLocation);
-                    });
-
-                    // Populate location dropdown with unique names
-                    uniqueLocations.forEach(location => {
-                        const option = document.createElement('option');
-                        option.value = location;
-                        option.textContent = location;
-                        locationSelect.appendChild(option);
-                    });
-                }
+                updateLocationOptions(selectedRegion, locations);
             });
 
             // Handle form submission
@@ -73,6 +57,31 @@ document.addEventListener('DOMContentLoaded', () => {
             alert('An error occurred while loading location data.');
         });
 });
+
+function updateLocationOptions(region, locations) {
+    const locationSelect = document.getElementById('location');
+    locationSelect.innerHTML = ''; // Clear previous options
+
+    if (locations[region]) {
+        // Use a Set to store unique location names
+        const uniqueLocations = new Set();
+
+        // Iterate over locations and add filtered names to the Set
+        locations[region].forEach(location => {
+            // Use regex to remove parts within parentheses
+            const cleanLocation = location.replace(/\s*\(.*?\)$/, '').trim();
+            uniqueLocations.add(cleanLocation);
+        });
+
+        // Populate location dropdown with unique names
+        uniqueLocations.forEach(location => {
+            const option = document.createElement('option');
+            option.value = location;
+            option.textContent = location;
+            locationSelect.appendChild(option);
+        });
+    }
+}
 
 function updateTable(data) {
     const tableDiv = document.getElementById('pokemonTable');
@@ -146,4 +155,3 @@ function groupByNameAndId(data) {
         return acc;
     }, {});
 }
-
