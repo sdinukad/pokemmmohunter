@@ -25,12 +25,23 @@ document.addEventListener('DOMContentLoaded', () => {
                 locationSelect.innerHTML = ''; // Clear previous options
 
                 if (locations[selectedRegion]) {
-                    for (const location of new Set(locations[selectedRegion])) {
+                    // Use a Set to store unique location names
+                    const uniqueLocations = new Set();
+
+                    // Iterate over locations and add filtered names to the Set
+                    locations[selectedRegion].forEach(location => {
+                        // Use regex to remove parts within parentheses
+                        const cleanLocation = location.replace(/\s*\(.*?\)$/, '').trim();
+                        uniqueLocations.add(cleanLocation);
+                    });
+
+                    // Populate location dropdown with unique names
+                    uniqueLocations.forEach(location => {
                         const option = document.createElement('option');
                         option.value = location;
                         option.textContent = location;
                         locationSelect.appendChild(option);
-                    }
+                    });
                 }
             });
 
