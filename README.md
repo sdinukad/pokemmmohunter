@@ -9,3 +9,17 @@ Might be slow on first load since it's a free hosting tier.
 
 ###
 Added another [live version on Heroku](https://pokemmohunter-5c3adc4b0956.herokuapp.com/) for better performance  
+
+
+
+
+
+
+
+
+
+
+
+
+
+<a href="https://www.buymeacoffee.com/aphrodiziac" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/default-orange.png" alt="Buy Me A Coffee" height="41" width="174"></a>
