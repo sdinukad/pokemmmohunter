@@ -8,4 +8,4 @@ Live version available [here](https://pokemmmohunter.onrender.com/).
 Might be slow on first load since it's a free hosting tier.
 
 ###
-Added another [live version on Heroku](https://boiling-mountain-84480-128d22c65632.herokuapp.com/) for better performance  
+Added another [live version on Heroku](https://pokemmohunter-5c3adc4b0956.herokuapp.com/) for better performance  
